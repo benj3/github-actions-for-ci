@@ -1,0 +1,29 @@
+name: Team awesome's approval workflow
+on: pull_request_review
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    
+    steps: 
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      - uses: actions/upload-artifact@master
+        with:
+    needs: build
+          path: public/
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm test
